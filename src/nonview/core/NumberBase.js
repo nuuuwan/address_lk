@@ -1,6 +1,5 @@
 import { NUMBER_SYMBOLS } from "./NUMBER_SYMBOLS.js";
 const N_SYMBOLS = NUMBER_SYMBOLS.length;
-console.info({ N_SYMBOLS });
 export default class NumberBase {
   static format(x, base) {
     let factors = [];
@@ -12,6 +11,6 @@ export default class NumberBase {
     return factors
       .reverse()
       .map((f) => NUMBER_SYMBOLS[parseInt((f * N_SYMBOLS) / base)])
-      .join(" · ");
+      .join("");
   }
 }

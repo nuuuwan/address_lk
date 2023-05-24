@@ -10,8 +10,16 @@ import NumberBase from "../../nonview/core/NumberBase.js";
 
 const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 const ZOOM = 16;
-const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [5, 79, 10, 82];
+const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-90, -180, 90, 180];
 const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
+
+const BASE = 1024;
+const CHAR_COUNT = 4;
+const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
+const QUANTUM = Math.sqrt(QUANTUM2);
+
+const BACKGROUND_COLORS = ["white", "#7c7c7c", "#ccb45d", "#6aaa64"];
+const COLORS = ["black", "white", "white", "white"];
 
 function getLabel([lat, lng]) {
   const [spanLat, spanLng] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
@@ -23,13 +31,6 @@ function getLabel([lat, lng]) {
   if (!(0 < pLat && pLat < maxPLat && 0 < pLng && pLng < maxPLng)) {
     return "";
   }
-
-  const BASE = 512;
-  const CHAR_COUNT = 3;
-  const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
-  const QUANTUM = Math.sqrt(QUANTUM2);
-  const DEGREES_PER_SYMBOL = maxSpan / QUANTUM;
-  console.info({ DEGREES_PER_SYMBOL });
 
   const n = parseInt(parseInt(pLat * QUANTUM) * QUANTUM + pLng * QUANTUM);
   const s = NumberBase.format(n, BASE);
@@ -51,25 +52,60 @@ export default class OSMView extends Component {
       return null;
     }
 
-    const label = getLabel(displayCenter);
     const key = "center-" + displayCenter.join("-");
 
     return (
       <SVGOverlay key={key} bounds={displayBounds}>
+        <circle cx="50%" cy="50%" r="70" fill="red" fillOpacity={0.1} />
+        <circle cx="50%" cy="50%" r="40" fill="red" fillOpacity={0.2} />
         <circle cx="50%" cy="50%" r="10" fill="red" />
-        <text
-          x="50%"
-          y="55%"
-          textAnchor="middle"
-          dominantBaseline="middle"
-          fill="black"
-          fontSize="24"
-          fontFamily="Fjalla One"
-        >
-          {label}
-        </text>
       </SVGOverlay>
     );
+  }
+
+  renderLabel() {
+    const { displayCenter, displayBounds } = this.state;
+
+    if (!displayBounds) {
+      return null;
+    }
+
+    const label = getLabel(displayCenter);
+    if (label.length === 0) {
+      return null;
+    }
+    var renderedLabelItems = [];
+    for (var j = 0; j < CHAR_COUNT; j++) {
+      var i_color = j;
+      var inner = [];
+      for (var i = 0; i < 5; i++) {
+        const c = label.charAt(5 * j + i);
+        if (j < CHAR_COUNT - 1) {
+          if (c === label.charAt(5 * (CHAR_COUNT - 1) + i)) {
+            i_color = 3;
+          } else if (label.substring(5 * (CHAR_COUNT - 1)).includes(c)) {
+            i_color = 2;
+          } else {
+            i_color = 1;
+          }
+        }
+
+        const backgroundColor = BACKGROUND_COLORS[i_color];
+        const color = COLORS[i_color];
+
+        inner.push(
+          <span
+            key={`span-${j}-${i}`}
+            className="label-item"
+            style={{ color, backgroundColor, borderColor: color }}
+          >
+            {c}
+          </span>
+        );
+      }
+      renderedLabelItems.push(<div key={`span-${j}`}>{inner}</div>);
+    }
+    return renderedLabelItems;
   }
 
   render() {
@@ -89,11 +125,14 @@ export default class OSMView extends Component {
     }.bind(this);
 
     return (
-      <MapContainer center={displayCenter} zoom={ZOOM} scrollWheelZoom={true}>
-        <TileLayer url={URL_FORMAT} />
-        {this.renderCenter()}
-        <EventComponent />
-      </MapContainer>
+      <>
+        <MapContainer center={displayCenter} zoom={ZOOM} scrollWheelZoom={true}>
+          <TileLayer url={URL_FORMAT} />
+          {this.renderCenter()}
+          <EventComponent />
+        </MapContainer>
+        <div className="bottom-panel">{this.renderLabel()}</div>
+      </>
     );
   }
 }
