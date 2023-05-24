@@ -1,12 +1,17 @@
-import NUMBER_SYMBOLS from "./NUMBER_SYMBOLS";
+import { NUMBER_SYMBOLS } from "./NUMBER_SYMBOLS.js";
+const N_SYMBOLS = NUMBER_SYMBOLS.length;
+console.info({ N_SYMBOLS });
 export default class NumberBase {
-  static format(base, x, nChars) {
-    let basic = x.toString(base).toUpperCase().substring(0, nChars);
-    for (let i = 0; i < base; i++) {
-      const symbol = NUMBER_SYMBOLS[i] + " ";
-      const digit = i.toString(base).toUpperCase();
-      basic = basic.replaceAll(digit, symbol);
+  static format(x, base) {
+    let factors = [];
+    let r = x;
+    while (r > 0) {
+      factors.push(r % base);
+      r = Math.floor(r / base);
     }
-    return basic;
+    return factors
+      .reverse()
+      .map((f) => NUMBER_SYMBOLS[parseInt((f * N_SYMBOLS) / base)])
+      .join(" · ");
   }
 }
