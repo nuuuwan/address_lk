@@ -1,13 +1,11 @@
-import './App.css';
-import OSMView from './view/organisms/OSMView';
+import "./App.css";
+import OSMView from "./view/organisms/OSMView";
 function App() {
   return (
     <div className="App">
-      <OSMView/>
+      <OSMView />
     </div>
   );
 }
 
 export default App;
-
-
