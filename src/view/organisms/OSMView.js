@@ -36,7 +36,7 @@ export default class OSMView extends Component {
     const {minLat, minLng, maxLat, maxLng} = this.state;
     const [latSpan, lngSpan] = [maxLat - minLat, maxLng - minLng];
     function getLevel(x) {
-      return Math.pow(QUANTUM, Math.round(logQ(x*16),0)-1);
+      return Math.pow(QUANTUM, Math.round(logQ(x),0));
     }
     const latLevel = getLevel(latSpan)
     const lngLevel = getLevel(lngSpan)
@@ -52,7 +52,8 @@ export default class OSMView extends Component {
           [lat, lng],
           [lat + latLevel, lng + level],
         ]
-        const label = getAddressLabel(lat, lng, level);
+        const [midLat, midLng] = [(lat + latLevel/2), (lng + level/2)];
+        const label = getAddressLabel(midLat, midLng, level);
         renderedRectangles.push(
           <Rectangle
             bounds={bounds}
