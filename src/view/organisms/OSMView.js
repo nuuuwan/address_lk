@@ -1,6 +1,7 @@
 import {Component} from 'react';
 import {MapContainer, TileLayer, Rectangle, useMapEvent, SVGOverlay} from 'react-leaflet';
 import './OSMView.css';
+import NumberBase from '../../nonview/core/NumberBase.js';
 
 const URL_FORMAT = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ZOOM = 8;
@@ -23,7 +24,7 @@ function getAddressLabel(lat, lng, level) {
   const steps = -logQ(level);
   const nChars = Math.ceil(steps) +1;
   function format(x) {
-    return  (x*K).toString(QUANTUM).toUpperCase().substring(0, nChars);
+    return NumberBase.format(QUANTUM, x*K, nChars);
   }
   return `${format(nLat,0)}-${format(nLng,0)}`;
 }
