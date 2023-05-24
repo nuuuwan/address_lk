@@ -1,19 +1,15 @@
 import { Component } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  useMapEvent,
-  SVGOverlay,
-} from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent, Marker } from "react-leaflet";
 import "./OSMView.css";
 import NumberBase from "../../nonview/core/NumberBase.js";
+import { N_SYMBOLS } from "../../nonview/core/NUMBER_SYMBOLS.js";
 
 const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const ZOOM = 16;
-const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-90, -180, 90, 180];
+const ZOOM = 18;
+const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-85, -180, 85, 180];
 const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
 
-const BASE = 1024;
+const BASE = N_SYMBOLS;
 const CHAR_COUNT = 4;
 const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
 const QUANTUM = Math.sqrt(QUANTUM2);
@@ -23,12 +19,13 @@ const COLORS = ["black", "white", "white", "white"];
 
 function getLabel([lat, lng]) {
   const [spanLat, spanLng] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
-  const maxSpan = Math.max(spanLat, spanLng);
 
-  const [pLat, pLng] = [(lat - MIN_LAT) / maxSpan, (lng - MIN_LNG) / maxSpan];
-  const [maxPLat, maxPLng] = [spanLat / maxSpan, spanLng / maxSpan];
+  const [pLat, pLng] = [
+    1 - (lat - MIN_LAT) / spanLat,
+    (lng - MIN_LNG) / spanLng,
+  ];
 
-  if (!(0 < pLat && pLat < maxPLat && 0 < pLng && pLng < maxPLng)) {
+  if (!(0 < pLat && pLat < 1 && 0 < pLng && pLng < 1)) {
     return "";
   }
 
@@ -46,29 +43,13 @@ export default class OSMView extends Component {
   }
 
   renderCenter() {
-    const { displayCenter, displayBounds } = this.state;
+    const { displayCenter } = this.state;
 
-    if (!displayBounds) {
-      return null;
-    }
-
-    const key = "center-" + displayCenter.join("-");
-
-    return (
-      <SVGOverlay key={key} bounds={displayBounds}>
-        <circle cx="50%" cy="50%" r="70" fill="red" fillOpacity={0.1} />
-        <circle cx="50%" cy="50%" r="40" fill="red" fillOpacity={0.2} />
-        <circle cx="50%" cy="50%" r="10" fill="red" />
-      </SVGOverlay>
-    );
+    return <Marker position={displayCenter}></Marker>;
   }
 
   renderLabel() {
-    const { displayCenter, displayBounds } = this.state;
-
-    if (!displayBounds) {
-      return null;
-    }
+    const { displayCenter } = this.state;
 
     const label = getLabel(displayCenter);
     if (label.length === 0) {
@@ -76,18 +57,16 @@ export default class OSMView extends Component {
     }
     var renderedLabelItems = [];
     for (var j = 0; j < CHAR_COUNT; j++) {
-      var i_color = j;
+      var i_color;
       var inner = [];
       for (var i = 0; i < 5; i++) {
         const c = label.charAt(5 * j + i);
-        if (j < CHAR_COUNT - 1) {
-          if (c === label.charAt(5 * (CHAR_COUNT - 1) + i)) {
-            i_color = 3;
-          } else if (label.substring(5 * (CHAR_COUNT - 1)).includes(c)) {
-            i_color = 2;
-          } else {
-            i_color = 1;
-          }
+        if (c === label.charAt(5 * (CHAR_COUNT - 1) + i)) {
+          i_color = 3;
+        } else if (label.substring(5 * (CHAR_COUNT - 1)).includes(c)) {
+          i_color = 2;
+        } else {
+          i_color = 1;
         }
 
         const backgroundColor = BACKGROUND_COLORS[i_color];

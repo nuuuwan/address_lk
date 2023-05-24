@@ -1,5 +1,5 @@
-import { NUMBER_SYMBOLS } from "./NUMBER_SYMBOLS.js";
-const N_SYMBOLS = NUMBER_SYMBOLS.length;
+import { NUMBER_SYMBOLS, N_SYMBOLS } from "./NUMBER_SYMBOLS.js";
+
 export default class NumberBase {
   static format(x, base) {
     let factors = [];

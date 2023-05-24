@@ -1306,7 +1306,7 @@ export const NUMBER_SYMBOLS = [
   "VOLVO",
   "VOTED",
   "VOTES",
-  "VSNET",
+  "VULVA",
   "WAGES",
   "WAGON",
   "WALES",
@@ -1379,3 +1379,4 @@ export const NUMBER_SYMBOLS = [
   "ZDNET",
   "ZONES",
 ];
+export const N_SYMBOLS = NUMBER_SYMBOLS.length;
