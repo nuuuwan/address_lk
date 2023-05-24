@@ -13,8 +13,8 @@ function logQ(x) {
 }
 
 const K = Math.pow(QUANTUM, parseInt(logQ(10000)))
-  
-const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [6.91, 79.86, 6.92, 79.87];
+
+const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [5.9, 79.5,9.9, 81.9];
 
 
 function getAddressLabel(lat, lng, latLevel) {
@@ -53,6 +53,10 @@ export default class OSMView extends Component {
           [lat + latLevel, lng + level],
         ]
         const [midLat, midLng] = [(lat + latLevel/2), (lng + level/2)];
+        
+        if (midLat + level < MIN_LAT || midLat -level > MAX_LAT || midLng + level < MIN_LNG || midLng-level > MAX_LNG) {
+          continue;
+        }
         const label = getAddressLabel(midLat, midLng, level);
         renderedRectangles.push(
           <Rectangle
