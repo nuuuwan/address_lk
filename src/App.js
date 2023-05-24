@@ -3,7 +3,6 @@ import OSMView from './view/organisms/OSMView';
 function App() {
   return (
     <div className="App">
-      A new addressing system for Sri Lanka.
       <OSMView/>
     </div>
   );
