@@ -1,3 +1,4 @@
+import BigIntScrambler from "./BigIntScrambler.js";
 import {
   MIN_LAT,
   MIN_LNG,
@@ -25,11 +26,17 @@ export default class LatLngToWord {
 
   static getWord([lat, lng]) {
     const n = LatLngToWord.latLngToBigInt([lat, lng]);
-    return NumberBase.stringify(n, BASE);
+    const scrambledN = BigIntScrambler.scramble(n);
+    return NumberBase.stringify(scrambledN, BASE);
   }
 
   static getLatLng(word) {
-    const n = NumberBase.parse(word, BASE);
-    return LatLngToWord.bigIntToLatLng(n);
+    const scrambledBigInt = NumberBase.parse(word, BASE);
+    const n = BigIntScrambler.unscramble(scrambledBigInt);
+    const latLng = LatLngToWord.bigIntToLatLng(n);
+    if (isNaN(latLng[0]) || isNaN(latLng[1])) {
+      return null;
+    }
+    return latLng;
   }
 }
