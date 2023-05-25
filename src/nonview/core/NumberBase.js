@@ -11,7 +11,8 @@ export default class NumberBase {
       r = Math.floor(r / base);
     }
     if (digits.length < MAX_DIGITS) {
-      for (let i = 0; i < MAX_DIGITS - digits.length; i++) {
+      const r = MAX_DIGITS - digits.length;
+      for (let i = 0; i < r; i++) {
         digits.push(0);
       }
     }
