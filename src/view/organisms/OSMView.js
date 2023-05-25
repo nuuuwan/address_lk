@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { MapContainer, TileLayer, useMapEvent, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
 
 import {
   LATLNG_LIPTON_CIRCUS,
@@ -15,15 +15,38 @@ import "./OSMView.css";
 export default class OSMView extends Component {
   constructor(props) {
     super(props);
-    const displayBounds = null;
-    const displayCenter = LATLNG_LIPTON_CIRCUS;
-    this.state = { displayBounds, displayCenter };
+    this.state = { displayCenter: LATLNG_LIPTON_CIRCUS };
   }
 
   renderCenter() {
-    const { displayCenter } = this.state;
-
-    return <Marker position={displayCenter}></Marker>;
+    return (
+      <svg className="svg-center" width="100%" height="100vh">
+        <circle
+          cx="50%"
+          cy="50%"
+          r="8%"
+          fill="red"
+          fillOpacity="0.5"
+          stroke="none"
+        />
+        <circle
+          cx="50%"
+          cy="50%"
+          r="5%"
+          fill="red"
+          fillOpacity="0.5"
+          stroke="none"
+        />
+        <circle
+          cx="50%"
+          cy="50%"
+          r="2%"
+          fill="red"
+          fillOpacity="0.5"
+          stroke="none"
+        />
+      </svg>
+    );
   }
 
   renderLabel() {
@@ -38,7 +61,8 @@ export default class OSMView extends Component {
       var i_color;
       var inner = [];
       for (var i = 0; i < 5; i++) {
-        const c = label.charAt(5 * j + i);
+        const charLoc = 5 * j + i;
+        const c = label.charAt(charLoc);
         if (c === label.charAt(5 * (CHAR_COUNT - 1) + i)) {
           i_color = 3;
         } else if (label.substring(5 * (CHAR_COUNT - 1)).includes(c)) {
@@ -47,17 +71,29 @@ export default class OSMView extends Component {
           i_color = 1;
         }
 
+        const onChange = function (event) {
+          const newLabel =
+            label.substring(0, charLoc) +
+            event.target.value +
+            label.substring(charLoc + 1);
+          const newDisplayCenter = LatLngToWord.getLatLng(newLabel);
+
+          if (newDisplayCenter) {
+            this.setState({ displayCenter: newDisplayCenter });
+          }
+        }.bind(this);
+
         const backgroundColor = BACKGROUND_COLORS[i_color];
         const color = COLORS[i_color];
-
         inner.push(
-          <span
-            key={`span-${j}-${i}`}
-            className="label-item"
+          <input
+            type="text"
+            key={`input-${j}-${i}`}
+            className="input-char"
             style={{ color, backgroundColor, borderColor: color }}
-          >
-            {c}
-          </span>
+            value={c}
+            onChange={onChange}
+          />
         );
       }
       renderedLabelItems.push(<div key={`span-${j}`}>{inner}</div>);
@@ -68,26 +104,30 @@ export default class OSMView extends Component {
   render() {
     const { displayCenter } = this.state;
     const EventComponent = function () {
-      const map = useMapEvent("move", () => {
-        const bounds = map.getBounds();
-        const displayBounds = [
-          [bounds._southWest.lat, bounds._southWest.lng],
-          [bounds._northEast.lat, bounds._northEast.lng],
-        ];
+      const map = useMapEvent("dragend", () => {
         const center = map.getCenter();
         const displayCenter = [center.lat, center.lng];
-        this.setState({ displayBounds, displayCenter });
+        this.setState({ displayCenter });
       });
       return null;
     }.bind(this);
 
+    const key = `map-${displayCenter[0]}-${displayCenter[1]}`;
+
     return (
       <>
-        <MapContainer center={displayCenter} zoom={ZOOM} scrollWheelZoom={true}>
+        {this.renderCenter()}
+
+        <MapContainer
+          key={key}
+          center={displayCenter}
+          zoom={ZOOM}
+          scrollWheelZoom={true}
+        >
           <TileLayer url={URL_FORMAT} />
-          {this.renderCenter()}
           <EventComponent />
         </MapContainer>
+
         <div className="bottom-panel">{this.renderLabel()}</div>
       </>
     );
