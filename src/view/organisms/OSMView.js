@@ -1,38 +1,16 @@
 import { Component } from "react";
 import { MapContainer, TileLayer, useMapEvent, Marker } from "react-leaflet";
+
+import {
+  LATLNG_LIPTON_CIRCUS,
+  ZOOM,
+  URL_FORMAT,
+  CHAR_COUNT,
+  BACKGROUND_COLORS,
+  COLORS,
+} from "../../nonview/core/constants";
+import LatLngToWord from "../../nonview/core/LatLngToWord";
 import "./OSMView.css";
-import NumberBase from "../../nonview/core/NumberBase.js";
-import { N_SYMBOLS } from "../../nonview/core/NUMBER_SYMBOLS.js";
-
-const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const ZOOM = 18;
-const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-85, -180, 85, 180];
-const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
-
-const BASE = N_SYMBOLS;
-const CHAR_COUNT = 4;
-const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
-const QUANTUM = Math.sqrt(QUANTUM2);
-
-const BACKGROUND_COLORS = ["white", "#7c7c7c", "#ccb45d", "#6aaa64"];
-const COLORS = ["black", "white", "white", "white"];
-
-function getLabel([lat, lng]) {
-  const [spanLat, spanLng] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
-
-  const [pLat, pLng] = [
-    1 - (lat - MIN_LAT) / spanLat,
-    (lng - MIN_LNG) / spanLng,
-  ];
-
-  if (!(0 < pLat && pLat < 1 && 0 < pLng && pLng < 1)) {
-    return "";
-  }
-
-  const n = parseInt(parseInt(pLat * QUANTUM) * QUANTUM + pLng * QUANTUM);
-  const s = NumberBase.format(n, BASE);
-  return `${s}`;
-}
 
 export default class OSMView extends Component {
   constructor(props) {
@@ -51,7 +29,7 @@ export default class OSMView extends Component {
   renderLabel() {
     const { displayCenter } = this.state;
 
-    const label = getLabel(displayCenter);
+    const label = LatLngToWord.getWord(displayCenter);
     if (label.length === 0) {
       return null;
     }
