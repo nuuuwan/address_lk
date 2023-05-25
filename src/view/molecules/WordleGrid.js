@@ -15,7 +15,6 @@ export default function WordleGrid({
   if (displayLabel.length === 0) {
     return null;
   }
-  console.info({ isDisplayLabelValid });
   var renderedLabelItems = [];
   for (var j = 0; j < CHAR_COUNT; j++) {
     var i_color;

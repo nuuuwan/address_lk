@@ -14,10 +14,11 @@ function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
   ];
 
   const isCenter = dlat == 0 && dlng == 0;
-  const color = isCenter ? "red" : "black";
-  const opacity = isCenter ? 1 : 0.1;
-  const fillColor = "none";
-  const pathOptions = { fillColor, color, weight: 1, opacity };
+  const color = isCenter ? "blue" : "black";
+  const opacity = isCenter ? 1 : 0.05;
+  const fillColor = "blue";
+  const fillOpacity = isCenter ? 0.2 : 0.05;
+  const pathOptions = { fillColor, color, weight: 1, opacity, fillOpacity };
 
   return <Rectangle bounds={rectBounds} pathOptions={pathOptions} />;
 }

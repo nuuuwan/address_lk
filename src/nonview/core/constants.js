@@ -18,7 +18,7 @@ export const LATLNG = {
 };
 
 export const BASE = N_SYMBOLS;
-export const CHAR_COUNT = 4;
+export const CHAR_COUNT = 3;
 export const CHARS_PER_WORD = 5;
 export const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
 export const QUANTUM = parseInt(Math.sqrt(QUANTUM2));

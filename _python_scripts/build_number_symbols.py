@@ -3,7 +3,7 @@ import os
 import random
 from utils import File, Log
 
-N_SYMBOLS = 2 ** 10
+N_SYMBOLS = 2 ** 12
 
 WORDS_PATH = os.path.join('_python_scripts', 'WORDS.txt')
 JS_PATH = os.path.join('src', 'nonview', 'core', 'NUMBER_SYMBOLS.js')
