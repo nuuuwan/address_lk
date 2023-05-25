@@ -2,7 +2,7 @@ import { Component } from "react";
 import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
 
 import {
-  LATLNG_LIPTON_CIRCUS,
+  LATLNG,
   ZOOM,
   ZOOM_IN,
   URL_FORMAT,
@@ -19,7 +19,7 @@ import "./OSMView.css";
 export default class OSMView extends Component {
   constructor(props) {
     super(props);
-    const displayCenter = LATLNG_LIPTON_CIRCUS;
+    const displayCenter = LATLNG.LIPTON_CIRCUS;
     const displayLabel = LatLngToWord.getWord(displayCenter);
     const isDisplayLabelValid = true;
     const activeWordleSquareIndex = 0;
