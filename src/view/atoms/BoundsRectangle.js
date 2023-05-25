@@ -5,8 +5,8 @@ import LatLngToWord from "../../nonview/core/LatLngToWord";
 export default function BoundsRectangle({ displayCenter }) {
   const [nLat, nLng] = LatLngToWord.normalizeLatLng(displayCenter);
   const rectBounds = [
-    [nLat, nLng],
-    [nLat + LATS_PER_QUANT, nLng + LNGS_PER_QUANT],
+    [nLat - LATS_PER_QUANT / 2, nLng - LNGS_PER_QUANT / 2],
+    [nLat + LATS_PER_QUANT / 2, nLng + LNGS_PER_QUANT / 2],
   ];
 
   return (

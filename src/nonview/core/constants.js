@@ -1,7 +1,7 @@
 import { N_SYMBOLS } from "../../nonview/core/NUMBER_SYMBOLS.js";
 
 export const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-export const ZOOM = 15;
+export const ZOOM = 18;
 export const ZOOM_IN = 18;
 export const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-85, -180, 85, 180];
 export const [LAT_SPAN, LNG_SPAN] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
@@ -10,13 +10,16 @@ export const LATLNG = {
   BLUE_BRIDGE: [51.502347158795274, -0.1352271360745232],
   QUAILBRUKE: [47.3667788120173, 8.543102515699452],
   MEM_CHU: [37.42641463102428, -122.17062858224875],
+  SRI_PADA: [6.809445575676784, 80.49944630902678],
 };
 
 export const BASE = N_SYMBOLS;
 export const CHAR_COUNT = 3;
 export const CHARS_PER_WORD = 5;
 export const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
-export const QUANTUM = Math.sqrt(QUANTUM2);
+export const QUANTUM = parseInt(Math.sqrt(QUANTUM2));
+console.info("QUANTUM", QUANTUM);
+console.info("QUANTUM2", QUANTUM2);
 
 export const LATS_PER_QUANT = LAT_SPAN / QUANTUM;
 export const LNGS_PER_QUANT = LNG_SPAN / QUANTUM;

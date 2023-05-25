@@ -28,7 +28,8 @@ export default class LatLngToWord {
   }
 
   static getWord([lat, lng]) {
-    const n = LatLngToWord.latLngToBigInt([lat, lng]);
+    const [nLat, nLng] = LatLngToWord.normalizeLatLng([lat, lng]);
+    const n = LatLngToWord.latLngToBigInt([nLat, nLng]);
     const scrambledN = BigIntScrambler.scramble(n);
     return NumberBase.stringify(scrambledN, BASE);
   }
@@ -40,12 +41,16 @@ export default class LatLngToWord {
     if (isNaN(latLng[0]) || isNaN(latLng[1])) {
       return null;
     }
-    return [latLng[0] + LATS_PER_QUANT/2, latLng[1] + LNGS_PER_QUANT/2];
+    const [lat, lng] = latLng;
+    const [nLat, nLng] = LatLngToWord.normalizeLatLng([lat, lng]);
+    return [nLat, nLng];
   }
 
   static normalizeLatLng([lat, lng]) {
-    const nLat = Math.floor(lat / LATS_PER_QUANT) * LATS_PER_QUANT;
-    const nLng = Math.floor(lng / LNGS_PER_QUANT) * LNGS_PER_QUANT;
+    const nLat =
+      Math.floor(lat / LATS_PER_QUANT) * LATS_PER_QUANT + LATS_PER_QUANT / 2;
+    const nLng =
+      Math.floor(lng / LNGS_PER_QUANT) * LNGS_PER_QUANT + LNGS_PER_QUANT / 2;
     return [nLat, nLng];
   }
 }
@@ -54,5 +59,11 @@ for (var [name, latlng] of Object.entries(LATLNG)) {
   const word = LatLngToWord.getWord(latlng);
   const latLng2 = LatLngToWord.getLatLng(word);
   const word2 = LatLngToWord.getWord(latLng2);
-  console.info({ name, latlng, word, latLng2, word2 });
+  const d = { name, latlng, word, latLng2, word2 };
+  const valid = word === word2;
+  if (valid) {
+    console.info(d);
+  } else {
+    console.error(d);
+  }
 }
