@@ -10,43 +10,13 @@ import {
   COLORS,
 } from "../../nonview/core/constants";
 import LatLngToWord from "../../nonview/core/LatLngToWord";
+import CenterTargetView from "../atoms/CenterTargetView";
 import "./OSMView.css";
 
 export default class OSMView extends Component {
   constructor(props) {
     super(props);
     this.state = { displayCenter: LATLNG_LIPTON_CIRCUS };
-  }
-
-  renderCenter() {
-    return (
-      <svg className="svg-center" width="100%" height="100vh">
-        <circle
-          cx="50%"
-          cy="50%"
-          r="8%"
-          fill="red"
-          fillOpacity="0.5"
-          stroke="none"
-        />
-        <circle
-          cx="50%"
-          cy="50%"
-          r="5%"
-          fill="red"
-          fillOpacity="0.5"
-          stroke="none"
-        />
-        <circle
-          cx="50%"
-          cy="50%"
-          r="2%"
-          fill="red"
-          fillOpacity="0.5"
-          stroke="none"
-        />
-      </svg>
-    );
   }
 
   renderLabel() {
@@ -116,7 +86,7 @@ export default class OSMView extends Component {
 
     return (
       <>
-        {this.renderCenter()}
+        {<CenterTargetView />}
 
         <MapContainer
           key={key}
