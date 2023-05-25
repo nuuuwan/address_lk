@@ -28,7 +28,7 @@ export default class LatLngToWord {
       1 - (lat - MIN_LAT) / spanLat,
       (lng - MIN_LNG) / spanLng,
     ];
-    
+
     if (!(0 < pLat && pLat < 1 && 0 < pLng && pLng < 1)) {
       return "";
     }
