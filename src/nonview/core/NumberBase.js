@@ -2,13 +2,18 @@ import { NUMBER_SYMBOLS, N_SYMBOLS } from "./NUMBER_SYMBOLS.js";
 import { CHARS_PER_WORD, CHAR_COUNT } from "./constants.js";
 
 export default class NumberBase {
-  static getDigits(x, base) {
+  static getDigits(x, base, MAX_DIGITS = 0) {
     let digits = [];
     let r = x;
     while (r > 0) {
       const digit = r % base;
       digits.push(digit);
       r = Math.floor(r / base);
+    }
+    if (digits.length < MAX_DIGITS) {
+      for (let i = 0; i < MAX_DIGITS - digits.length; i++) {
+        digits.push(0);
+      }
     }
     return digits.reverse();
   }
