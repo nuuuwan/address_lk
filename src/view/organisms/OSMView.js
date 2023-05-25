@@ -21,11 +21,13 @@ export default class OSMView extends Component {
     const displayLabel = LatLngToWord.getWord(displayCenter);
     const isDisplayLabelValid = true;
     const activeWordleSquareIndex = 0;
+    const displayZoom = ZOOM;
     this.state = {
       displayCenter,
       displayLabel,
       isDisplayLabelValid,
       activeWordleSquareIndex,
+      displayZoom,
     };
   }
 
@@ -47,10 +49,15 @@ export default class OSMView extends Component {
     });
   }
 
-  onChangeDisplayCenter(displayCenter) {
+  onChangeDisplayCenter(displayCenter, displayZoom) {
     const displayLabel = LatLngToWord.getWord(displayCenter);
     const isDisplayLabelValid = true;
-    this.setState({ displayCenter, displayLabel, isDisplayLabelValid });
+    this.setState({
+      displayCenter,
+      displayLabel,
+      isDisplayLabelValid,
+      displayZoom,
+    });
   }
 
   componentDidMount() {
@@ -72,18 +79,20 @@ export default class OSMView extends Component {
   }
 
   render() {
-    const { displayCenter, displayLabel, isDisplayLabelValid } = this.state;
+    const { displayCenter, displayLabel, isDisplayLabelValid, displayZoom } =
+      this.state;
 
     const EventComponent = function () {
       const map = useMapEvent("dragend", () => {
         const center = map.getCenter();
         const displayCenter = [center.lat, center.lng];
-        this.onChangeDisplayCenter(displayCenter);
+        const displayZoom = map.getZoom();
+        this.onChangeDisplayCenter(displayCenter, displayZoom);
       });
       return null;
     }.bind(this);
 
-    const key = `map-${displayCenter[0]}-${displayCenter[1]}`;
+    const key = `map-${displayCenter[0]}-${displayCenter[1]}-${displayZoom}`;
 
     return (
       <>
@@ -92,7 +101,7 @@ export default class OSMView extends Component {
         <MapContainer
           key={key}
           center={displayCenter}
-          zoom={ZOOM}
+          zoom={displayZoom}
           scrollWheelZoom={true}
         >
           <TileLayer url={URL_FORMAT} />
