@@ -5,7 +5,8 @@ export default class NumberBase {
     let factors = [];
     let r = x;
     while (r > 0) {
-      factors.push(r % base);
+      const factor = r % base;
+      factors.push(factor);
       r = Math.floor(r / base);
     }
     return factors
