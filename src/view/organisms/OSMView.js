@@ -74,8 +74,7 @@ export default class OSMView extends Component {
       "wordle-square-input"
     );
     const wordleSquareElem = wordleSquareElems[activeWordleSquareIndex];
-    wordleSquareElem.focus();
-    wordleSquareElem.setSelectionRange(0, 1);
+    wordleSquareElem.select();
   }
 
   render() {
