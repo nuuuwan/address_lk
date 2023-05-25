@@ -29,15 +29,17 @@ const INV_SHUFFLE_MAP_IDX = invertMapIdx(SHUFFLE_MAP_IDX);
 export default class BigIntScrambler {
   static scramble(x) {
     const digits = NumberBase.getDigits(x, BASE_SCRAMBLER, MAX_DIGITS);
-    const scrambledDigits = digits.map((_, i) => digits[SHUFFLE_MAP_IDX[i]]);
+    const scrambledDigits = digits
+      .map((_, i) => digits[SHUFFLE_MAP_IDX[i]])
+      .reverse();
     return NumberBase.getX(scrambledDigits, BASE_SCRAMBLER);
   }
 
   static unscramble(x) {
     const digits = NumberBase.getDigits(x, BASE_SCRAMBLER, MAX_DIGITS);
-    const unscrambledDigits = digits.map(
-      (_, i) => digits[INV_SHUFFLE_MAP_IDX[i]]
-    );
+    const unscrambledDigits = digits
+      .reverse()
+      .map((_, i) => digits[INV_SHUFFLE_MAP_IDX[i]]);
     return NumberBase.getX(unscrambledDigits, BASE_SCRAMBLER);
   }
 }
