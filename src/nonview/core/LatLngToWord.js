@@ -28,8 +28,7 @@ export default class LatLngToWord {
   }
 
   static getWord([lat, lng]) {
-    const [nLat, nLng] = LatLngToWord.normalizeLatLng([lat, lng]);
-    const n = LatLngToWord.latLngToBigInt([nLat, nLng]);
+    const n = LatLngToWord.latLngToBigInt([lat, lng]);
     const scrambledN = BigIntScrambler.scramble(n);
     return NumberBase.stringify(scrambledN, BASE);
   }
@@ -41,9 +40,7 @@ export default class LatLngToWord {
     if (isNaN(latLng[0]) || isNaN(latLng[1])) {
       return null;
     }
-    const [lat, lng] = latLng;
-    const [nLat, nLng] = LatLngToWord.normalizeLatLng([lat, lng]);
-    return [nLat, nLng];
+    return latLng;
   }
 
   static normalizeLatLng([lat, lng]) {
@@ -56,6 +53,7 @@ export default class LatLngToWord {
 }
 
 for (var [name, latlng] of Object.entries(LATLNG)) {
+  // if (name !== 'Test') continue;
   const word = LatLngToWord.getWord(latlng);
   const latLng2 = LatLngToWord.getLatLng(word);
   const word2 = LatLngToWord.getWord(latLng2);

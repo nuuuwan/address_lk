@@ -10,7 +10,7 @@ export default class NumberBase {
       digits.push(digit);
       r = Math.floor(r / base);
     }
-    
+
     if (digits.length < max_digits) {
       const r = max_digits - digits.length;
       for (let i = 0; i < r; i++) {
@@ -19,7 +19,7 @@ export default class NumberBase {
     }
 
     digits = digits.reverse();
-    
+
     return digits;
   }
 
@@ -33,10 +33,12 @@ export default class NumberBase {
 
   static stringify(x, base) {
     const digits = NumberBase.getDigits(x, base);
-    
-    return digits
+
+    const s = digits
       .map((f) => NUMBER_SYMBOLS[parseInt((f * N_SYMBOLS) / base)])
       .join("");
+
+    return s;
   }
 
   static parse(s, base) {
@@ -50,4 +52,3 @@ export default class NumberBase {
     return NumberBase.getX(digits, base);
   }
 }
-

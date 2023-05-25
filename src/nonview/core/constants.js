@@ -3,8 +3,12 @@ import { N_SYMBOLS } from "../../nonview/core/NUMBER_SYMBOLS.js";
 export const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const ZOOM = 18;
 export const ZOOM_IN = 18;
-export const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-85, -180, 85, 180];
+export const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-90, -180, 90, 180];
 export const [LAT_SPAN, LNG_SPAN] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
+
+console.info("LAT_SPAN", LAT_SPAN);
+console.info("LNG_SPAN", LNG_SPAN);
+
 export const LATLNG = {
   LIPTON_CIRCUS: [6.917272788217442, 79.8647961518609],
   BLUE_BRIDGE: [51.502347158795274, -0.1352271360745232],

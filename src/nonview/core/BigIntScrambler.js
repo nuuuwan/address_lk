@@ -5,11 +5,13 @@ import { CHAR_COUNT } from "./constants.js";
 const BASE_SCRAMBLER = 2;
 const IS_SCRAMBLER_ENABLED = true;
 function getMaxDigits() {
-  return parseInt(CHAR_COUNT * Math.round(Math.log(N_SYMBOLS)/ Math.log(BASE_SCRAMBLER)));
+  return parseInt(
+    CHAR_COUNT * Math.round(Math.log(N_SYMBOLS) / Math.log(BASE_SCRAMBLER))
+  );
 }
 
 const MAX_DIGITS = getMaxDigits();
-console.info( 'MAX_DIGITS', MAX_DIGITS);
+console.info("MAX_DIGITS", MAX_DIGITS);
 
 function getShuffleMapIdx(n) {
   const n2 = parseInt(n / 2);
