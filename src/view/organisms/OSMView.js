@@ -12,6 +12,7 @@ import {
 import LatLngToWord from "../../nonview/core/LatLngToWord";
 import CenterTargetView from "../atoms/CenterTargetView";
 import WordleGrid from "../molecules/WordleGrid";
+import BoundsRectangle from "../atoms/BoundsRectangle";
 
 import "./OSMView.css";
 
@@ -34,7 +35,6 @@ export default class OSMView extends Component {
 
   onChangeLabel(displayLabel, charLoc) {
     const newDisplayCenter = LatLngToWord.getLatLng(displayLabel);
-
     let isDisplayLabelValid = false;
     let displayCenter = this.state.displayCenter;
     if (newDisplayCenter) {
@@ -106,6 +106,7 @@ export default class OSMView extends Component {
         >
           <TileLayer url={URL_FORMAT} />
           <EventComponent />
+          <BoundsRectangle displayCenter={displayCenter} />
         </MapContainer>
 
         <div className="bottom-panel">
