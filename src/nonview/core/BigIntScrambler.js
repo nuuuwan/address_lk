@@ -1,15 +1,15 @@
+import { N_SYMBOLS } from "./NUMBER_SYMBOLS.js";
 import NumberBase from "./NumberBase.js";
-import { QUANTUM2 } from "./constants.js";
+import { CHAR_COUNT } from "./constants.js";
 
 const BASE_SCRAMBLER = 2;
-const DISABLE_SCRAMBLE = true;
+const IS_SCRAMBLER_ENABLED = true;
 function getMaxDigits() {
-  const rawLimit = parseInt(Math.log(QUANTUM2) / Math.log(BASE_SCRAMBLER));
-  return rawLimit + 1 - ((rawLimit + 1) % 2);
+  return parseInt(CHAR_COUNT * Math.round(Math.log(N_SYMBOLS)/ Math.log(BASE_SCRAMBLER)));
 }
 
 const MAX_DIGITS = getMaxDigits();
-console.info({ MAX_DIGITS });
+console.info( 'MAX_DIGITS', MAX_DIGITS);
 
 function getShuffleMapIdx(n) {
   const n2 = parseInt(n / 2);
@@ -17,6 +17,9 @@ function getShuffleMapIdx(n) {
   for (let i = 0; i < n2; i++) {
     mapIdx.push(i);
     mapIdx.push(i + n2);
+  }
+  if (n % 2 === 1) {
+    mapIdx.push(n - 1);
   }
   return mapIdx;
 }
@@ -34,7 +37,7 @@ const INV_SHUFFLE_MAP_IDX = invertMapIdx(SHUFFLE_MAP_IDX);
 
 export default class BigIntScrambler {
   static scramble(x) {
-    if (DISABLE_SCRAMBLE) return x;
+    if (!IS_SCRAMBLER_ENABLED) return x;
     const digits = NumberBase.getDigits(x, BASE_SCRAMBLER, MAX_DIGITS);
     const scrambledDigits = digits
       .map((_, i) => digits[SHUFFLE_MAP_IDX[i]])
@@ -43,7 +46,7 @@ export default class BigIntScrambler {
   }
 
   static unscramble(x) {
-    if (DISABLE_SCRAMBLE) return x;
+    if (!IS_SCRAMBLER_ENABLED) return x;
     const digits = NumberBase.getDigits(x, BASE_SCRAMBLER, MAX_DIGITS);
     const unscrambledDigits = digits
       .reverse()

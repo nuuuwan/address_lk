@@ -2,7 +2,7 @@ import { NUMBER_SYMBOLS, N_SYMBOLS } from "./NUMBER_SYMBOLS.js";
 import { CHARS_PER_WORD, CHAR_COUNT } from "./constants.js";
 
 export default class NumberBase {
-  static getDigits(x, base, MAX_DIGITS = 0) {
+  static getDigits(x, base, max_digits = 0) {
     let digits = [];
     let r = x;
     while (r > 0) {
@@ -10,13 +10,17 @@ export default class NumberBase {
       digits.push(digit);
       r = Math.floor(r / base);
     }
-    if (digits.length < MAX_DIGITS) {
-      const r = MAX_DIGITS - digits.length;
+    
+    if (digits.length < max_digits) {
+      const r = max_digits - digits.length;
       for (let i = 0; i < r; i++) {
         digits.push(0);
       }
     }
-    return digits.reverse();
+
+    digits = digits.reverse();
+    
+    return digits;
   }
 
   static getX(digits, base) {
@@ -29,6 +33,7 @@ export default class NumberBase {
 
   static stringify(x, base) {
     const digits = NumberBase.getDigits(x, base);
+    
     return digits
       .map((f) => NUMBER_SYMBOLS[parseInt((f * N_SYMBOLS) / base)])
       .join("");
@@ -45,3 +50,4 @@ export default class NumberBase {
     return NumberBase.getX(digits, base);
   }
 }
+
