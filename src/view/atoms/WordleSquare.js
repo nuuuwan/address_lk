@@ -11,9 +11,9 @@ export default function WordleSquare({
     onChangeChar(char);
   };
 
-  const onDummy = function (event) {
-    console.debug(event)
-  }
+  const onDummy = function () {
+    // Do nothing
+  };
   return (
     <input
       type="text"
