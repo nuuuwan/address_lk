@@ -11,9 +11,11 @@ function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
     [nLat + LATS_PER_QUANT / 2, nLng + LNGS_PER_QUANT / 2],
   ];
 
-  const color = dlat == 0 && dlng == 0 ? "red" : "gray";
+  const isCenter = dlat == 0 && dlng == 0;
+  const color =isCenter ? "red" : "#f8f8f8";
+  const opacity =isCenter ? 1 : 0.5;
   const fillColor = "none";
-  const pathOptions = { fillColor, color, weight: 1 };
+  const pathOptions = { fillColor, color, weight: 1 ,opacity};
 
   return <Rectangle bounds={rectBounds} pathOptions={pathOptions} />;
 }
@@ -21,7 +23,7 @@ function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
 export default function BoundsRectangle({ displayCenter }) {
   const [nLat0, nLng0] = LatLngToWord.normalizeLatLng(displayCenter);
 
-  const radius = 1;
+  const radius =10;
   let renderedRectangles = [];
 
   for (let dlat = -radius; dlat <= radius; dlat++) {
