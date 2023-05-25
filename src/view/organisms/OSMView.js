@@ -41,12 +41,17 @@ export default class OSMView extends Component {
     }
     const activeWordleSquareIndex =
       (charLoc + 1) % (CHARS_PER_WORD * CHAR_COUNT);
-    this.setState({
-      displayLabel,
-      displayCenter,
-      isDisplayLabelValid,
-      activeWordleSquareIndex,
-    });
+    this.setState(
+      {
+        displayLabel,
+        displayCenter,
+        isDisplayLabelValid,
+        activeWordleSquareIndex,
+      },
+      function () {
+        this.focusActiveWordleSquare();
+      }.bind(this)
+    );
   }
 
   onChangeDisplayCenter(displayCenter, displayZoom) {
@@ -58,14 +63,6 @@ export default class OSMView extends Component {
       isDisplayLabelValid,
       displayZoom,
     });
-  }
-
-  componentDidMount() {
-    this.focusActiveWordleSquare();
-  }
-
-  componentDidUpdate() {
-    this.focusActiveWordleSquare();
   }
 
   focusActiveWordleSquare() {
