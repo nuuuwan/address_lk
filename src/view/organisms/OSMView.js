@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, useMapEvent } from "react-leaflet";
 import {
   LATLNG_LIPTON_CIRCUS,
   ZOOM,
+  ZOOM_IN,
   URL_FORMAT,
   CHAR_COUNT,
   CHARS_PER_WORD,
@@ -47,6 +48,7 @@ export default class OSMView extends Component {
         displayCenter,
         isDisplayLabelValid,
         activeWordleSquareIndex,
+        displayZoom: ZOOM_IN,
       },
       function () {
         this.focusActiveWordleSquare();

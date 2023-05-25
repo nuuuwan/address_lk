@@ -4,7 +4,7 @@ export default function CenterTargetView() {
       <circle
         cx="50%"
         cy="50%"
-        r="8%"
+        r="9%"
         fill="red"
         fillOpacity="0.5"
         stroke="none"
@@ -20,9 +20,9 @@ export default function CenterTargetView() {
       <circle
         cx="50%"
         cy="50%"
-        r="2%"
+        r="1%"
         fill="red"
-        fillOpacity="0.5"
+        fillOpacity="1"
         stroke="none"
       />
     </svg>

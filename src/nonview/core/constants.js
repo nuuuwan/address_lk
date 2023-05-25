@@ -2,6 +2,7 @@ import { N_SYMBOLS } from "../../nonview/core/NUMBER_SYMBOLS.js";
 
 export const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 export const ZOOM = 15;
+export const ZOOM_IN = 18;
 export const [MIN_LAT, MIN_LNG, MAX_LAT, MAX_LNG] = [-85, -180, 85, 180];
 export const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
 
