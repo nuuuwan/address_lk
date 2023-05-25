@@ -12,8 +12,8 @@ export default function WordleSquare({
   };
 
   const onDummy = function (event) {
-    console.debug(event);
-  };
+    console.debug(event)
+  }
   return (
     <input
       type="text"
