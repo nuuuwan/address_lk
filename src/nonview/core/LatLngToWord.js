@@ -43,6 +43,16 @@ export default class LatLngToWord {
     return latLng;
   }
 
+  static getLatLngSafe(word) {
+    let latLng = null;
+    try {
+      latLng = LatLngToWord.getLatLng(word);
+    } catch (e) {
+      console.error(e);
+    } 
+    return latLng;
+  }
+
   static normalizeLatLng([lat, lng]) {
     const nLat =
       Math.floor(lat / LATS_PER_QUANT) * LATS_PER_QUANT + LATS_PER_QUANT / 2;
@@ -52,8 +62,8 @@ export default class LatLngToWord {
   }
 }
 
+export function test() { 
 for (var [name, latlng] of Object.entries(LATLNG)) {
-  // if (name !== "Test") continue;
   const word = LatLngToWord.getWord(latlng);
   const latLng2 = LatLngToWord.getLatLng(word);
   const word2 = LatLngToWord.getWord(latLng2);
@@ -64,4 +74,5 @@ for (var [name, latlng] of Object.entries(LATLNG)) {
   } else {
     console.error(d);
   }
+}
 }

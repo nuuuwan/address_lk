@@ -34,7 +34,8 @@ export default class OSMView extends Component {
   }
 
   onChangeLabel(displayLabel, charLoc) {
-    const newDisplayCenter = LatLngToWord.getLatLng(displayLabel);
+    
+    const newDisplayCenter = LatLngToWord.getLatLngSafe(displayLabel);
     let isDisplayLabelValid = false;
     let displayCenter = this.state.displayCenter;
     if (newDisplayCenter) {

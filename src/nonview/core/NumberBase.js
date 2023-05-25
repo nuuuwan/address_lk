@@ -47,6 +47,11 @@ export default class NumberBase {
       const iStart = i * CHARS_PER_WORD;
       const symbol = s.substring(iStart, iStart + CHARS_PER_WORD);
       const digit = NUMBER_SYMBOLS.indexOf(symbol);
+      
+      if (digit === -1) {
+        throw  `Invalid symbol ${symbol}`;
+      }
+      
       digits.push(digit);
     }
     return NumberBase.getX(digits, base);
