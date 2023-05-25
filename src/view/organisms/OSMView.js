@@ -34,12 +34,14 @@ export default class OSMView extends Component {
 
   onChangeLabel(displayLabel, charLoc) {
     const newDisplayCenter = LatLngToWord.getLatLng(displayLabel);
+
     let isDisplayLabelValid = false;
     let displayCenter = this.state.displayCenter;
     if (newDisplayCenter) {
       isDisplayLabelValid = true;
       displayCenter = newDisplayCenter;
     }
+
     const activeWordleSquareIndex =
       (charLoc + 1) % (CHARS_PER_WORD * CHAR_COUNT);
     this.setState(
