@@ -1,6 +1,9 @@
-const BASE_SCRAMBLER = 2;
-const MAX_DIGITS = 46;
 import NumberBase from "./NumberBase.js";
+import { QUANTUM2 } from "./constants.js";
+
+const BASE_SCRAMBLER = 2;
+const MAX_DIGITS = parseInt(Math.log(QUANTUM2) / Math.log(BASE_SCRAMBLER)) + 1;
+console.info({ MAX_DIGITS });
 
 function getShuffleMapIdx(n) {
   const n2 = parseInt(n / 2);
