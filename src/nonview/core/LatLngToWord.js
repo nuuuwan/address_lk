@@ -49,7 +49,7 @@ export default class LatLngToWord {
       latLng = LatLngToWord.getLatLng(word);
     } catch (e) {
       console.error(e);
-    } 
+    }
     return latLng;
   }
 
@@ -62,17 +62,17 @@ export default class LatLngToWord {
   }
 }
 
-export function test() { 
-for (var [name, latlng] of Object.entries(LATLNG)) {
-  const word = LatLngToWord.getWord(latlng);
-  const latLng2 = LatLngToWord.getLatLng(word);
-  const word2 = LatLngToWord.getWord(latLng2);
-  const d = { name, latlng, word, latLng2, word2 };
-  const valid = word === word2;
-  if (valid) {
-    console.info(d);
-  } else {
-    console.error(d);
+export function test() {
+  for (var [name, latlng] of Object.entries(LATLNG)) {
+    const word = LatLngToWord.getWord(latlng);
+    const latLng2 = LatLngToWord.getLatLng(word);
+    const word2 = LatLngToWord.getWord(latLng2);
+    const d = { name, latlng, word, latLng2, word2 };
+    const valid = word === word2;
+    if (valid) {
+      console.info(d);
+    } else {
+      console.error(d);
+    }
   }
-}
 }
