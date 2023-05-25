@@ -2,8 +2,8 @@ import { Rectangle } from "react-leaflet";
 import { LATS_PER_QUANT, LNGS_PER_QUANT } from "../../nonview/core/constants";
 import LatLngToWord from "../../nonview/core/LatLngToWord";
 
-const RADIUS = 1;
-
+const RADIUS = 0;
+const COLOR = "red";
 function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
   const nLat = nLat0 + dlat * LATS_PER_QUANT;
   const nLng = nLng0 + dlng * LNGS_PER_QUANT;
@@ -14,9 +14,9 @@ function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
   ];
 
   const isCenter = dlat == 0 && dlng == 0;
-  const color = isCenter ? "blue" : "black";
+  const color = isCenter ? COLOR : "black";
   const opacity = isCenter ? 1 : 0.05;
-  const fillColor = "blue";
+  const fillColor = COLOR;
   const fillOpacity = isCenter ? 0.2 : 0.05;
   const pathOptions = { fillColor, color, weight: 1, opacity, fillOpacity };
 
