@@ -33,10 +33,10 @@ export default function WordleGrid({
         i_color = 0;
       }
 
-      const onChange = function (event) {
+      const onChangeChar = function (char) {
         const newLabel =
           displayLabel.substring(0, charLoc) +
-          event.target.value +
+          char +
           displayLabel.substring(charLoc + 1);
         onChangeLabel(newLabel);
       };
@@ -49,7 +49,7 @@ export default function WordleGrid({
           c={c}
           color={color}
           backgroundColor={backgroundColor}
-          onChange={onChange}
+          onChangeChar={onChangeChar}
         />
       );
     }
