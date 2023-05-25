@@ -40,7 +40,7 @@ export default class LatLngToWord {
     if (isNaN(latLng[0]) || isNaN(latLng[1])) {
       return null;
     }
-    return latLng;
+    return [latLng[0] + LATS_PER_QUANT/2, latLng[1] + LNGS_PER_QUANT/2];
   }
 
   static normalizeLatLng([lat, lng]) {
