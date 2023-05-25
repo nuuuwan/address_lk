@@ -1,16 +1,12 @@
 import { Rectangle } from "react-leaflet";
 import { LATS_PER_QUANT, LNGS_PER_QUANT } from "../../nonview/core/constants";
+import LatLngToWord from "../../nonview/core/LatLngToWord";
 
 export default function BoundsRectangle({ displayCenter }) {
+  const [nLat, nLng] = LatLngToWord.normalizeLatLng(displayCenter);
   const rectBounds = [
-    [
-      displayCenter[0] - LATS_PER_QUANT / 2,
-      displayCenter[1] - LNGS_PER_QUANT / 2,
-    ],
-    [
-      displayCenter[0] + LATS_PER_QUANT / 2,
-      displayCenter[1] + LNGS_PER_QUANT / 2,
-    ],
+    [nLat, nLng],
+    [nLat + LATS_PER_QUANT, nLng + LNGS_PER_QUANT],
   ];
 
   return (
