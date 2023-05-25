@@ -1,3 +1,5 @@
+import "./WordleSquare.css";
+
 export default function WordleSquare({
   c,
   color,
@@ -5,15 +7,22 @@ export default function WordleSquare({
   onChangeChar,
 }) {
   const onChangeInner = function (event) {
-    onChangeChar(event.target.value.charAt(0).toUpperCase());
+    const char = event.key.toUpperCase();
+    onChangeChar(char);
+  };
+
+  const onDummy = function (event) {
+    console.debug(event);
   };
   return (
     <input
       type="text"
-      className="input-char"
+      className="wordle-square-input"
       style={{ color, backgroundColor, borderColor: color }}
       value={c}
-      onChange={onChangeInner}
+      onKeyDown={onChangeInner}
+      onChange={onDummy}
+      onFocus={(e) => e.target.select()}
     />
   );
 }
