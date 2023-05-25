@@ -27,9 +27,13 @@ console.info("MAX_DIGITS", MAX_DIGITS);
 // }
 
 const CUSTOM_SHUFFLE_MAP = [
-  36, 11, 33, 0, 37, 20, 14, 7, 18, 21, 12, 6, 5, 1, 23, 15, 10, 39, 35, 28, 27,
-  40, 17, 8, 34, 3, 41, 29, 9, 4, 38, 13, 22, 30, 19, 25, 31, 32, 16, 2, 26, 24,
+  0, 27, 12, 21, 29, 15, 38, 34, 1, 20, 7, 5, 10, 13, 14, 37, 22, 39, 23, 17, 8,
+  35, 3, 33, 9, 4, 36, 6, 28, 18, 11, 30, 19, 25, 31, 32, 16, 2, 26, 24,
 ];
+
+if (CUSTOM_SHUFFLE_MAP.length !== MAX_DIGITS) {
+  throw new Error("CUSTOM_SHUFFLE_MAP.length !== MAX_DIGITS");
+}
 
 function invertMapIdx(mapIdx) {
   let invMapIdx = [];

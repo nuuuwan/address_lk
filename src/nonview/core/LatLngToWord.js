@@ -53,7 +53,7 @@ export default class LatLngToWord {
 }
 
 for (var [name, latlng] of Object.entries(LATLNG)) {
-  // if (name !== 'Test') continue;
+  // if (name !== "Test") continue;
   const word = LatLngToWord.getWord(latlng);
   const latLng2 = LatLngToWord.getLatLng(word);
   const word2 = LatLngToWord.getWord(latLng2);

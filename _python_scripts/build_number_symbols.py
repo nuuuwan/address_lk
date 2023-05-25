@@ -3,7 +3,7 @@ import os
 import random
 from utils import File, Log
 
-N_SYMBOLS = 2 ** 14
+N_SYMBOLS = 2 ** 10
 
 WORDS_PATH = os.path.join('_python_scripts', 'WORDS.txt')
 JS_PATH = os.path.join('src', 'nonview', 'core', 'NUMBER_SYMBOLS.js')
@@ -16,8 +16,8 @@ log.info(f'{N_SYMBOLS=}')
 def main():
     words = File(WORDS_PATH).read_lines()
     words = [word.strip().upper() for word in words if len(word.strip()) == 5]
-    random.shuffle(words)
     words = words[:N_SYMBOLS]
+    random.shuffle(words)
     
     inner = json.dumps(words, indent=4)
     js_content = f'''

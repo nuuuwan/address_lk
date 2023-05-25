@@ -14,8 +14,8 @@ function SingleRectangle({ nLat0, nLng0, dlat, dlng }) {
   ];
 
   const isCenter = dlat == 0 && dlng == 0;
-  const color = isCenter ? "red" : "#f8f8f8";
-  const opacity = isCenter ? 1 : 0.5;
+  const color = isCenter ? "red" : "black";
+  const opacity = isCenter ? 1 : 0.1;
   const fillColor = "none";
   const pathOptions = { fillColor, color, weight: 1, opacity };
 
@@ -30,15 +30,23 @@ export default function BoundsRectangle({ displayCenter }) {
   for (let dlat = -RADIUS; dlat <= RADIUS; dlat++) {
     for (let dlng = -RADIUS; dlng <= RADIUS; dlng++) {
       if (dlat == 0 && dlng == 0) continue;
-
+      const key = `${nLat0}-${nLng0}-${dlat}-${dlng}`;
       renderedRectangles.push(
-        <SingleRectangle nLat0={nLat0} nLng0={nLng0} dlat={dlat} dlng={dlng} />
+        <SingleRectangle
+          key={key}
+          nLat0={nLat0}
+          nLng0={nLng0}
+          dlat={dlat}
+          dlng={dlng}
+        />
       );
     }
   }
 
+  const key = `${nLat0}-${nLng0}-${0}-${0}`;
+
   renderedRectangles.push(
-    <SingleRectangle nLat0={nLat0} nLng0={nLng0} dlat={0} dlng={0} />
+    <SingleRectangle key={key} nLat0={nLat0} nLng0={nLng0} dlat={0} dlng={0} />
   );
 
   return renderedRectangles;
