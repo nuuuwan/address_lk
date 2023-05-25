@@ -6,6 +6,7 @@ import {
   LNG_SPAN,
   BASE,
   QUANTUM,
+  LATLNG_LIPTON_CIRCUS,
 } from "./constants.js";
 import NumberBase from "./NumberBase.js";
 
@@ -39,4 +40,11 @@ export default class LatLngToWord {
     }
     return latLng;
   }
+}
+
+for (var latlng of [LATLNG_LIPTON_CIRCUS]) {
+  const word = LatLngToWord.getWord(latlng);
+  const latLng2 = LatLngToWord.getLatLng(word);
+  const word2 = LatLngToWord.getWord(latLng2);
+  console.info({ LATLNG_LIPTON_CIRCUS, word, latLng2, word2 });
 }
