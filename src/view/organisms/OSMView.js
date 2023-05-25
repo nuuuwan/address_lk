@@ -5,6 +5,8 @@ import {
   LATLNG_LIPTON_CIRCUS,
   ZOOM,
   URL_FORMAT,
+  CHAR_COUNT,
+  CHARS_PER_WORD,
 } from "../../nonview/core/constants";
 import LatLngToWord from "../../nonview/core/LatLngToWord";
 import CenterTargetView from "../atoms/CenterTargetView";
@@ -18,10 +20,16 @@ export default class OSMView extends Component {
     const displayCenter = LATLNG_LIPTON_CIRCUS;
     const displayLabel = LatLngToWord.getWord(displayCenter);
     const isDisplayLabelValid = true;
-    this.state = { displayCenter, displayLabel, isDisplayLabelValid };
+    const activeWordleSquareIndex = 0;
+    this.state = {
+      displayCenter,
+      displayLabel,
+      isDisplayLabelValid,
+      activeWordleSquareIndex,
+    };
   }
 
-  onChangeLabel(displayLabel) {
+  onChangeLabel(displayLabel, charLoc) {
     const newDisplayCenter = LatLngToWord.getLatLng(displayLabel);
     let isDisplayLabelValid = false;
     let displayCenter = this.state.displayCenter;
@@ -29,13 +37,38 @@ export default class OSMView extends Component {
       isDisplayLabelValid = true;
       displayCenter = newDisplayCenter;
     }
-    this.setState({ displayLabel, displayCenter, isDisplayLabelValid });
+    const activeWordleSquareIndex =
+      (charLoc + 1) % (CHARS_PER_WORD * CHAR_COUNT);
+    this.setState({
+      displayLabel,
+      displayCenter,
+      isDisplayLabelValid,
+      activeWordleSquareIndex,
+    });
   }
 
   onChangeDisplayCenter(displayCenter) {
     const displayLabel = LatLngToWord.getWord(displayCenter);
     const isDisplayLabelValid = true;
     this.setState({ displayCenter, displayLabel, isDisplayLabelValid });
+  }
+
+  componentDidMount() {
+    this.focusActiveWordleSquare();
+  }
+
+  componentDidUpdate() {
+    this.focusActiveWordleSquare();
+  }
+
+  focusActiveWordleSquare() {
+    const { activeWordleSquareIndex } = this.state;
+    const wordleSquareElems = document.getElementsByClassName(
+      "wordle-square-input"
+    );
+    const wordleSquareElem = wordleSquareElems[activeWordleSquareIndex];
+    wordleSquareElem.focus();
+    wordleSquareElem.setSelectionRange(0, 1);
   }
 
   render() {
