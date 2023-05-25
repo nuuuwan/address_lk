@@ -8,10 +8,16 @@ export const [LAT_SPAN, LNG_SPAN] = [MAX_LAT - MIN_LAT, MAX_LNG - MIN_LNG];
 export const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
 
 export const BASE = N_SYMBOLS;
-export const CHAR_COUNT = 4;
+export const CHAR_COUNT = 3;
 export const CHARS_PER_WORD = 5;
 export const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
 export const QUANTUM = Math.sqrt(QUANTUM2);
+
+export const LATS_PER_QUANT = LAT_SPAN / QUANTUM;
+export const LNGS_PER_QUANT = LNG_SPAN / QUANTUM;
+
+console.info("LATS_PER_QUANT", LATS_PER_QUANT);
+console.info("LNGS_PER_QUANT", LNGS_PER_QUANT);
 
 export const BACKGROUND_COLORS = ["white", "#7c7c7c", "#ccb45d", "#6aaa64"];
 export const COLORS = ["black", "white", "white", "white"];
