@@ -20,7 +20,7 @@ export default function CenterTargetView() {
       <circle
         cx="50%"
         cy="50%"
-        r="1%"
+        r="0.5%"
         fill="red"
         fillOpacity="1"
         stroke="none"
