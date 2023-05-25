@@ -43,6 +43,9 @@ export default class LatLngToWord {
     for (var i = 0; i < CHAR_COUNT; i++) {
       const iStart = i * CHARS_PER_WORD;
       const subWord = word.substring(iStart, iStart + CHARS_PER_WORD);
+      if (!NUMBER_SYMBOL_TO_INDEX[subWord]) {
+        return null;
+      }
       const v = NUMBER_SYMBOL_TO_INDEX[subWord];
       n += v * Math.pow(BASE, CHAR_COUNT - i - 1);
     }
