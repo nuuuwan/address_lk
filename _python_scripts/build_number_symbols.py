@@ -3,15 +3,20 @@ import os
 import random
 from utils import File, Log
 
-WORDS_PATH = os.path.join('src', 'nonview', 'core', 'WORDS.txt')
+N_SYMBOLS = 2 ** 12
+
+WORDS_PATH = os.path.join('_python_scripts', 'WORDS.txt')
 JS_PATH = os.path.join('src', 'nonview', 'core', 'NUMBER_SYMBOLS.js')
 
 log = Log('build_number_symbols')
 random.seed(1)
 
+log.info(f'{N_SYMBOLS=}')
+
 def main():
     words = File(WORDS_PATH).read_lines()
-    words = [word.strip().upper() for word in words if len(word.strip()) == 5]
+    words = [word.strip().upper() for word in words if len(word.strip()) == 5][:N_SYMBOLS]
+    
     random.shuffle(words)
     inner = json.dumps(words, indent=4)
     js_content = f'''
