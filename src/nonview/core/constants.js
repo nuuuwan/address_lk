@@ -7,6 +7,7 @@ export const LATLNG_LIPTON_CIRCUS = [6.917272788217442, 79.8647961518609];
 
 export const BASE = N_SYMBOLS;
 export const CHAR_COUNT = 4;
+export const CHARS_PER_WORD = 5;
 export const QUANTUM2 = Math.pow(BASE, CHAR_COUNT);
 export const QUANTUM = Math.sqrt(QUANTUM2);
 
